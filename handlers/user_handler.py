@@ -149,6 +149,7 @@ async def question_finish(callback: CallbackQuery, state: FSMContext, bot: Bot):
                                 f'прошел опрос - {" ".join(survey_list)}')
 
 
+
 @router.message(F.text == 'Рекомендации')
 async def press_button_recomendation(message: Message) -> None:
     logging.info(f'press_button_recomendation: {message.chat.id}')
