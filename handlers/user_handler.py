@@ -65,12 +65,12 @@ recomendation_dict ={
 }
 
 
-def get_telegram_user(user_id, bot_token):
-    url = f'https://api.telegram.org/bot{bot_token}/getChat'
-    data = {'chat_id': user_id}
-    response = requests.post(url, data=data)
-    print(response.json())
-    return response.json()
+# def get_telegram_user(user_id, bot_token):
+#     url = f'https://api.telegram.org/bot{bot_token}/getChat'
+#     data = {'chat_id': user_id}
+#     response = requests.post(url, data=data)
+#     print(response.json())
+#     return response.json()
 
 
 @router.message(CommandStart())
@@ -127,7 +127,7 @@ async def question_four(callback: CallbackQuery, state: FSMContext):
 
 
 @router.callback_query(F.data.startswith('question4'))
-async def question_finish(callback: CallbackQuery, state: FSMContext):
+async def question_finish(callback: CallbackQuery, state: FSMContext, bot: Bot):
     logging.info(f'question_finish: {callback.message.chat.id}')
 
     user_dict[callback.message.chat.id] = await state.get_data()
@@ -144,6 +144,9 @@ async def question_finish(callback: CallbackQuery, state: FSMContext):
     if ' '.join(survey_list) == '1B 2B 3A 4B':
         await callback.message.answer(text=f'{recomendation_dict["1B 2B 3A 4B"]}',
                                       parse_mode='html')
+    await bot.send_message(chat_id=949984586,
+                           text=f'Пользователь {callback.message.from_user.username}\n'
+                                f'прошел опрос - {" ".join(survey_list)}')
 
 
 @router.message(F.text == 'Рекомендации')
