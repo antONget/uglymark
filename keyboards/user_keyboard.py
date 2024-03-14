@@ -44,3 +44,20 @@ def keyboards_question4():
     button_2 = InlineKeyboardButton(text='Б) Нет', callback_data='question4_4B')
     keyboard = InlineKeyboardMarkup(inline_keyboard=[[button_1, button_2]],)
     return keyboard
+
+
+def keyboards_recomendation():
+    logging.info(f'keyboards_recomendation')
+    button_1 = InlineKeyboardButton(text='Правило 1', callback_data='recomendation_1')
+    button_2 = InlineKeyboardButton(text='Правило 2', callback_data='recomendation_2')
+    button_3 = InlineKeyboardButton(text='Правило 1', callback_data='recomendation_3')
+    button_4 = InlineKeyboardButton(text='Правило 2', callback_data='recomendation_4')
+    button_5 = InlineKeyboardButton(text='Правило 1', callback_data='recomendation_5')
+    button_6 = InlineKeyboardButton(text='Правило 2', callback_data='recomendation_6')
+    button_7 = InlineKeyboardButton(text='Правило 1', callback_data='recomendation_7')
+    button_8 = InlineKeyboardButton(text='Правило 2', callback_data='recomendation_8')
+    button_9 = InlineKeyboardButton(text='Правило 1', callback_data='recomendation_9')
+    button_10 = InlineKeyboardButton(text='Правило 2', callback_data='recomendation_10')
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[[button_1], [button_2], [button_3], [button_4], [button_5],
+                                                     [button_6], [button_7], [button_8], [button_9], [button_10]],)
+    return keyboard

@@ -9,7 +9,7 @@ import datetime
 import logging
 from config_data.config import Config, load_config
 from keyboards.user_keyboard import keyboards_start, keyboards_question1, keyboards_question2, keyboards_question3,\
-    keyboards_question4
+    keyboards_question4, keyboards_recomendation
 # from services.googlesheets import append_user, append_client
 import asyncio
 # import requests
@@ -148,13 +148,17 @@ async def question_finish(callback: CallbackQuery, state: FSMContext, bot: Bot):
                            text=f'Пользователь {callback.message.from_user.username}\n'
                                 f'прошел опрос - {" ".join(survey_list)}')
 
-
-
 @router.message(F.text == 'Рекомендации')
 async def press_button_recomendation(message: Message) -> None:
     logging.info(f'press_button_recomendation: {message.chat.id}')
-    # 1
-    await message.answer(text=f'<blockquote>Правило №1. Режим сна:</blockquote>\n'
+    await message.answer(text='Правила для правильного сна',
+                         reply_markup=keyboards_recomendation())
+
+
+@router.callback_query(F.data=='recomendation_1')
+async def recomendation_1(callback: CallbackQuery):
+    logging.info(f'recomendation_1: {callback.message.chat.id}')
+    await callback.message.answer(text=f'<blockquote>Правило №1. Режим сна:</blockquote>\n'
                               f'Главное, о чем стоит всегда помнить – это режим, и он должен быть во всем. Согласитесь,'
                               f' если вы ходите в тренажерный зал по три раза в неделю несколько месяцев подряд,'
                               f' то и четвертый раз позаниматься на тренажерах для вас не составит труда. А вот если'
@@ -167,8 +171,12 @@ async def press_button_recomendation(message: Message) -> None:
                               f' два часовых пояса. По причине того, что вы поздно засыпаете и просыпаетесь в выходные,'
                               f' в воскресенье вам трудно уснуть, а утром в понедельник вы совсем разбиты.',
                          parse_mode='html')
-    # 2
-    await message.answer(text=f'<blockquote>Правило №2. Физическая активность:</blockquote>\n'
+
+
+@router.callback_query(F.data == 'recomendation_2')
+async def recomendation_2(callback: CallbackQuery):
+    logging.info(f'recomendation_2: {callback.message.chat.id}')
+    await callback.message.answer(text=f'<blockquote>Правило №2. Физическая активность:</blockquote>\n'
                               f'Для качественного не только сна, но и для жизни в целом, нужно быть активным.'
                               f' Чтобы сон наступал быстрее, важно быть достаточно подвижным в течение всего дня.'
                               f' Человек ест пищу, благодаря этому в организм поступает энергия, а любая энергия'
@@ -177,22 +185,33 @@ async def press_button_recomendation(message: Message) -> None:
                               f' делайте 5-10 приседаний утром, а перед сном прогуляйтесь около дома. Поверьте,'
                               f' так вы начнете засыпать намного быстрее.',
                          parse_mode='html')
-    # 3
-    await message.answer(text=f'<blockquote>Правило №3. Питание:</blockquote>\n'
+
+
+@router.callback_query(F.data == 'recomendation_3')
+async def recomendation_3(callback: CallbackQuery):
+    logging.info(f'recomendation_3: {callback.message.chat.id}')
+    await callback.message.answer(text=f'<blockquote>Правило №3. Питание:</blockquote>\n'
                               f'Кажется, информация об этом звучала из каждого утюга, но для тех, кто пропустил,'
                               f' повторяем: последний прием пищи должен быть за 3-4 часа до сна. И постарайтесь'
                               f' не переедать: во время сна организм должен отдыхать, а не тратить силы на'
                               f' переваривание бабушкиных пирожков, хотя, согласимся, они очень вкусные!',
                          parse_mode='html')
-    # 4
-    await message.answer(text=f'<blockquote>Правило №4. Гигиена спального места:</blockquote>\n'
+
+
+@router.callback_query(F.data == 'recomendation_4')
+async def recomendation_4(callback: CallbackQuery):
+    logging.info(f'recomendation_4: {callback.message.chat.id}')
+    await callback.message.answer(text=f'<blockquote>Правило №4. Гигиена спального места:</blockquote>\n'
                               f'Чтобы от вас не улетело одеяло, и простыня не убежала (а без них, сами понимаете, не'
                               f' очень удобно спать), необходимо следить за чистотой спального места. Пот, пыль, грязь'
                               f' и посторонние запахи мешают нам заснуть. Меняйте постельное белье не реже чем раз в'
                               f' 10 дней и как можно скорее приобретите защитный чехол для подушки и матраса.',
                          parse_mode='html')
-    # 5
-    await message.answer(text=f'<blockquote>Правило №5. Температура в спальне:</blockquote>\n'
+
+@router.callback_query(F.data == 'recomendation_5')
+async def recomendation_5(callback: CallbackQuery):
+    logging.info(f'recomendation_5: {callback.message.chat.id}')
+    await callback.message.answer(text=f'<blockquote>Правило №5. Температура в спальне:</blockquote>\n'
                               f'Начнем с того, почти все люди спят в одежде для сна: пижамах, сорочках, футболках.'
                               f' Все это дополнительно согревает наше тело. К этому же добавляем одеяло и тепло,'
                               f' исходящее от партнера или кота. Если учесть то, что в среднем температура воздуха в'
@@ -202,8 +221,12 @@ async def press_button_recomendation(message: Message) -> None:
                               f' С. Выбирая одеяла, отдавайте предпочтения моделям с эффектом терморегуляции.'
                               f' Под таким одеялом не жарко летом, и не холодно зимой.',
                          parse_mode='html')
-    # 6
-    await message.answer(text=f'<blockquote>Правило №6. Воздух:</blockquote>\n'
+
+
+@router.callback_query(F.data == 'recomendation_6')
+async def recomendation_6(callback: CallbackQuery):
+    logging.info(f'recomendation_6: {callback.message.chat.id}')
+    await callback.message.answer(text=f'<blockquote>Правило №6. Воздух:</blockquote>\n'
                               f'А помните, как хорошо в детстве вы спали в деревне, после дождя с грозой? И ничего,'
                               f' что кровать неудобная, а подушка слишком жесткая, сон наступал моментально, а на утро'
                               f' с первыми петухами вы просыпались максимально отдохнувшими. Все дело в воздухе, точнее'
@@ -215,23 +238,34 @@ async def press_button_recomendation(message: Message) -> None:
                               f' мойками для воздуха или увлажнителями. Воздух в спальне должен быть чистым и в меру'
                               f' влажным.',
                          parse_mode='html')
-    # 7
-    await message.answer(text=f'<blockquote>Правило №7. Освещение:</blockquote>\n'
+
+
+@router.callback_query(F.data == 'recomendation_7')
+async def recomendation_7(callback: CallbackQuery):
+    logging.info(f'recomendation_7: {callback.message.chat.id}')
+    await callback.message.answer(text=f'<blockquote>Правило №7. Освещение:</blockquote>\n'
                               f'Спать нужно в абсолютной темноте, только так в нашем организме начинает вырабатываться'
                               f' мелатонин – гормон счастья, красоты и долголетия. И обратите внимание, что даже'
                               f' огоньки выключенного телевизора, роутера или короткие оповещения на мобильном'
                               f' телефоне снижают выработку этого гормона. Они раздражают наш мозг, в который даже'
                               f' во время сна поступают сигналы об окружающей среде.',
                          parse_mode='html')
-    # 8
-    await message.answer(text=f'<blockquote>Правило №8. Звуки:</blockquote>\n'
+
+
+@router.callback_query(F.data == 'recomendation_8')
+async def recomendation_8(callback: CallbackQuery):
+    logging.info(f'recomendation_8: {callback.message.chat.id}')
+    await callback.message.answer(text=f'<blockquote>Правило №8. Звуки:</blockquote>\n'
                               f'Спать нужно в абсолютной тишине, причина та же: нам кажется, что мы спим, но наш мозг'
                               f' работает, он слышит, как кто-то «чирикает», и анализирует эту информацию. А вот'
                               f' послушать непосредственно перед сном расслабляющую музыку – можно, она поможет'
                               f' организму успокоиться и аккуратно настроит вас на отдых.',
                          parse_mode='html')
-    # 9
-    await message.answer(text=f'<blockquote>Правило №9. Мелатонин или во сколько засыпать:</blockquote>\n'
+
+@router.callback_query(F.data == 'recomendation_9')
+async def recomendation_9(callback: CallbackQuery):
+    logging.info(f'recomendation_9: {callback.message.chat.id}')
+    await callback.message.answer(text=f'<blockquote>Правило №9. Мелатонин или во сколько засыпать:</blockquote>\n'
                               f'Еще раз и более подробно про мелатонин. Это гормон, который вырабатывается в нашем'
                               f' организме именно в темное время суток, поэтому мы и хотим спать, когда становится'
                               f' темнее. Меньше всего этого гормона вырабатывается в светлое время, с 8 до 18 часов,'
@@ -243,8 +277,11 @@ async def press_button_recomendation(message: Message) -> None:
                               f' онкологических. Недостаток мелатонина – прямой путь к депрессии и бессоннице в'
                               f' пожилом возрасте.',
                          parse_mode='html')
-    # 10
-    await message.answer(text=f'<blockquote>Правило №10. На чем вы спите:</blockquote>\n'
+
+@router.callback_query(F.data == 'recomendation_10')
+async def recomendation_10(callback: CallbackQuery):
+    logging.info(f'recomendation_10: {callback.message.chat.id}')
+    await callback.message.answer(text=f'<blockquote>Правило №10. На чем вы спите:</blockquote>\n'
                               f'Чтобы ваше тело окончательно расслабилось в конце дня, ему должно быть комфортно.'
                               f' Высота подушки должна подходить под длину плеча, а матрас – поддерживать позвоночник'
                               f' в правильном положении.',
