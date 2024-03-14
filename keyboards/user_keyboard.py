@@ -48,16 +48,16 @@ def keyboards_question4():
 
 def keyboards_recomendation():
     logging.info(f'keyboards_recomendation')
-    button_1 = InlineKeyboardButton(text='Правило 1', callback_data='recomendation_1')
-    button_2 = InlineKeyboardButton(text='Правило 2', callback_data='recomendation_2')
-    button_3 = InlineKeyboardButton(text='Правило 3', callback_data='recomendation_3')
-    button_4 = InlineKeyboardButton(text='Правило 4', callback_data='recomendation_4')
-    button_5 = InlineKeyboardButton(text='Правило 5', callback_data='recomendation_5')
-    button_6 = InlineKeyboardButton(text='Правило 6', callback_data='recomendation_6')
-    button_7 = InlineKeyboardButton(text='Правило 7', callback_data='recomendation_7')
-    button_8 = InlineKeyboardButton(text='Правило 8', callback_data='recomendation_8')
-    button_9 = InlineKeyboardButton(text='Правило 9', callback_data='recomendation_9')
-    button_10 = InlineKeyboardButton(text='Правило 10', callback_data='recomendation_10')
+    button_1 = InlineKeyboardButton(text='правило 1 «режим сна»', callback_data='recomendation_1')
+    button_2 = InlineKeyboardButton(text='правило 2 «физическая активность', callback_data='recomendation_2')
+    button_3 = InlineKeyboardButton(text='правило 3 «питание»', callback_data='recomendation_3')
+    button_4 = InlineKeyboardButton(text='правило 4 «гигиена спального места»', callback_data='recomendation_4')
+    button_5 = InlineKeyboardButton(text='правило 5 «температура в спальне»', callback_data='recomendation_5')
+    button_6 = InlineKeyboardButton(text='правило 6 «воздух»', callback_data='recomendation_6')
+    button_7 = InlineKeyboardButton(text='правило 7 «освещение»', callback_data='recomendation_7')
+    button_8 = InlineKeyboardButton(text='правило 8 «звуки»', callback_data='recomendation_8')
+    button_9 = InlineKeyboardButton(text='правило 9 «мелатонин или во сколько засыпаете»', callback_data='recomendation_9')
+    button_10 = InlineKeyboardButton(text='правило 10 «на чем вы спите»', callback_data='recomendation_10')
     keyboard = InlineKeyboardMarkup(inline_keyboard=[[button_1], [button_2], [button_3], [button_4], [button_5],
                                                      [button_6], [button_7], [button_8], [button_9], [button_10]],)
     return keyboard
